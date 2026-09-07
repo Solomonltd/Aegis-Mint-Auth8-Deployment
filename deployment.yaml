@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aegis-mint-auth-deployment
+  labels:
+    app: aegis-mint-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aegis-mint-auth
+  template:
+    metadata:
+      labels:
+        app: aegis-mint-auth
+    spec:
+      containers:
+      - name: auth-app
+        # This points to your verified container image in Artifact Registry
+        image: us-docker.pkg.dev/solomobn-nexus/aegis-mint-docker/deployer:1.0.0
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
